@@ -49,6 +49,43 @@ namespace TestMakerFreeWebApp.Controllers
                 {
                     Formatting = Formatting.Indented
                 });
-        }   
+        }
+
+        /// <summary>
+        /// Get: api/quiz/ByTitle
+        /// Retrieves the {num} Quizzes sorted by Title (A to Z)
+        /// </summary>
+        /// <param name="num">Quizzes sorted by Title</param>
+        /// <returns></returns>
+        [HttpGet("ByTitle/{num:int?}")]
+        public IActionResult ByTitle(int num = 10)
+        {
+            var sampleQuizes = ((JsonResult)Latest(num)).Value as List<QuizViewModel>;
+
+            return new JsonResult(
+                sampleQuizes.OrderBy(t => t.Title),
+                new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented
+                });
+        }
+
+        /// <summary>
+        /// Get: api/quiz/mostViewed
+        /// Retrieves the {num} random Quizes
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns>{num} random Quizzes</returns>
+        [HttpGet("Random/{num:int?}")]
+        public IActionResult Random(int num = 10)
+        {
+            var sampleQuizes = ((JsonResult)Latest(num)).Value as List<QuizViewModel>;
+
+            return new JsonResult(sampleQuizes.OrderBy(t => Guid.NewGuid()),
+                new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented
+                });
+        }
     }
 }
