@@ -17,17 +17,18 @@ namespace TestMakerFreeWebApp.Controllers
         [HttpGet("Latest/{num}")]
         public IActionResult Latest(int num = 10)
         {
-            var sampleQuizzes = new List<QuizViewModel>();
-
-            // add a first sample quiz
-            sampleQuizzes.Add(new QuizViewModel()
+            var sampleQuizzes = new List<QuizViewModel>
             {
-                Id = 1,
-                Title = "Which Shingeki No Kyojin character are you?",
-                Description = "Anime-related personality test",
-                CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.Now
-            });
+                // add a first sample quiz
+                new QuizViewModel()
+                {
+                    Id = 1,
+                    Title = "Which Shingeki No Kyojin character are you?",
+                    Description = "Anime-related personality test",
+                    CreatedDate = DateTime.Now,
+                    LastModifiedDate = DateTime.Now
+                }
+            };
 
             // add a bunch of other sample quizzes
             for (int i = 2; i <= num; i++)
