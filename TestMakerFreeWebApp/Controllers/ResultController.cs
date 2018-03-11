@@ -56,17 +56,19 @@ namespace TestMakerFreeWebApp.Controllers
         [HttpGet("All/{quizId}")]
         public IActionResult All(int quizId)
         {
-            var sampleResults = new List<ResultViewModel>();
-
-            // add a first sample result
-            sampleResults.Add(new ResultViewModel()
+            var sampleResults = new List<ResultViewModel>
             {
-                Id = 1,
-                QuizId = quizId,
-                Text = "What do you value most in your life?",
-                CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.Now
-            });
+
+                // add a first sample result
+                new ResultViewModel()
+                {
+                    Id = 1,
+                    QuizId = quizId,
+                    Text = "What do you value most in your life?",
+                    CreatedDate = DateTime.Now,
+                    LastModifiedDate = DateTime.Now
+                }
+            };
 
             // add a bunch of other sample results
             for (int i = 2; i <= 5; i++)
