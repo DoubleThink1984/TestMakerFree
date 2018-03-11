@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TestMakerFreeWebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeDepricatedController : Controller
     {
         public IActionResult Index()
         {
