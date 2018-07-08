@@ -7,12 +7,16 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
+import { QuizListComponent } from './components/quiz/quiz-list.component';
+import { QuizComponent } from './components/quiz/quiz.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
-        HomeComponent
+        HomeComponent,
+        QuizListComponent,
+        QuizComponent
     ],
     imports: [
         CommonModule,
