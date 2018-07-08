@@ -100,7 +100,7 @@ namespace TestMakerFreeWebApp.Controllers
                 sampleQuizzes.Add(new QuizViewModel()
                 {
                     Id = i,
-                    Title = String.Format("Sample Quiz {0}", i),
+                    Title = $"Sample Quiz {i}",
                     Description = "This is a sample quiz",
                     CreatedDate = DateTime.Now,
                     LastModifiedDate = DateTime.Now
