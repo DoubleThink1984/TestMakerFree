@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TestMakerFreeWebApp.Data;
 using Mapster;
+using TestMakerFreeWebApp.Data.Models;
 
 namespace TestMakerFreeWebApp.Controllers
 {
@@ -22,7 +23,7 @@ namespace TestMakerFreeWebApp.Controllers
             // Instantiate the ApplicationDbContext through DI
             DbContext = context;
         }
-        #endregion Constructor
+        #endregion
 
         #region RESTful conventions methods
         /// <summary>
@@ -34,10 +35,57 @@ namespace TestMakerFreeWebApp.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var quiz = DbContext.Quizzes.Where(i => i.Id == id).FirstOrDefault();
+            var quiz = DbContext.Quizzes.Where(i => i.Id == id)
+                .FirstOrDefault();
+
+            // handle requests asking for non-existing quizzes
+            if (quiz == null)
+            {
+                return NotFound(new
+                {
+                    Error = String.Format("Quiz ID {0} has not been found", id)
+                });
+            }
 
             return new JsonResult(
                 quiz.Adapt<QuizViewModel>(),
+                new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented
+                });
+        }
+         
+        /// <summary>
+        /// Edit the Quiz with the given {id}
+        /// </summary>
+        /// <param name="model">The QuizViewModel containing the data to update</param>
+        [HttpPost]
+        public IActionResult Post([FromBody]QuizViewModel model)
+        {
+            // return a generic HTTP Status 500 (Server Error)
+            // if the client payload is invalid.
+            if (model == null) return new StatusCodeResult(500);
+
+            // map the ViewModel to the Model
+            var quiz = model.Adapt<Quiz>();
+
+            // override those properties 
+            //   that should be set from the server-side only
+            quiz.CreatedDate = DateTime.Now;
+            quiz.LastModifiedDate = quiz.CreatedDate;
+
+            // Set a temporary author using the Admin user's userId
+            // as user login isn't supported yet: we'll change this later on.
+            quiz.UserId = DbContext.Users.Where(u => u.UserName == "Admin")
+                .FirstOrDefault().Id;
+
+            // add the new quiz
+            DbContext.Quizzes.Add(quiz);
+            // persist the changes into the Database.
+            DbContext.SaveChanges();
+
+            // return the newly-created Quiz to the client.
+            return new JsonResult(quiz.Adapt<QuizViewModel>(),
                 new JsonSerializerSettings()
                 {
                     Formatting = Formatting.Indented
@@ -49,19 +97,45 @@ namespace TestMakerFreeWebApp.Controllers
         /// </summary>
         /// <param name="model">The QuizViewModel containing the data to insert</param>
         [HttpPut]
-        public IActionResult Put(QuizViewModel model)
+        public IActionResult Put([FromBody]QuizViewModel model)
         {
-            throw new NotImplementedException();
-        }
+            // return a generic HTTP Status 500 (Server Error)
+            // if the client payload is invalid.
+            if (model == null) return new StatusCodeResult(500);
 
-        /// <summary>
-        /// Edit the Quiz with the given {id}
-        /// </summary>
-        /// <param name="model">The QuizViewModel containing the data to update</param>
-        [HttpPost]
-        public IActionResult Post(QuizViewModel model)
-        {
-            throw new NotImplementedException();
+            // retrieve the quiz to edit
+            var quiz = DbContext.Quizzes.Where(q => q.Id ==
+                        model.Id).FirstOrDefault();
+
+            // handle requests asking for non-existing quizzes
+            if (quiz == null)
+            {
+                return NotFound(new
+                {
+                    Error = String.Format("Quiz ID {0} has not been found", model.Id)
+                });
+            }
+
+            // handle the update (without object-mapping)
+            //   by manually assigning the properties 
+            //   we want to accept from the request
+            quiz.Title = model.Title;
+            quiz.Description = model.Description;
+            quiz.Text = model.Text;
+            quiz.Notes = model.Notes;
+
+            // properties set from server-side
+            quiz.LastModifiedDate = quiz.CreatedDate;
+
+            // persist the changes into the Database.
+            DbContext.SaveChanges();
+
+            // return the updated Quiz to the client.
+            return new JsonResult(quiz.Adapt<QuizViewModel>(),
+                new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented
+                });
         }
 
         /// <summary>
@@ -71,7 +145,26 @@ namespace TestMakerFreeWebApp.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            throw new NotImplementedException();
+            // retrieve the quiz from the Database
+            var quiz = DbContext.Quizzes.Where(i => i.Id == id)
+                .FirstOrDefault();
+
+            // handle requests asking for non-existing quizzes
+            if (quiz == null)
+            {
+                return NotFound(new
+                {
+                    Error = String.Format("Quiz ID {0} has not been found", id)
+                });
+            }
+
+            // remove the quiz from the DbContext.
+            DbContext.Quizzes.Remove(quiz);
+            // persist the changes into the Database.
+            DbContext.SaveChanges();
+
+            // return an HTTP Status 200 (OK).
+            return new OkResult();
         }
         #endregion
 
@@ -89,7 +182,6 @@ namespace TestMakerFreeWebApp.Controllers
                 .OrderByDescending(q => q.CreatedDate)
                 .Take(num)
                 .ToArray();
-
             return new JsonResult(
                 latest.Adapt<QuizViewModel[]>(),
                 new JsonSerializerSettings()
@@ -111,7 +203,6 @@ namespace TestMakerFreeWebApp.Controllers
                 .OrderBy(q => q.Title)
                 .Take(num)
                 .ToArray();
-
             return new JsonResult(
                 byTitle.Adapt<QuizViewModel[]>(),
                 new JsonSerializerSettings()
@@ -133,7 +224,6 @@ namespace TestMakerFreeWebApp.Controllers
                 .OrderBy(q => Guid.NewGuid())
                 .Take(num)
                 .ToArray();
-
             return new JsonResult(
                 random.Adapt<QuizViewModel[]>(),
                 new JsonSerializerSettings()
