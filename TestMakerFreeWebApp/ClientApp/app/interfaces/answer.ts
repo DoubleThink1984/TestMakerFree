@@ -1,6 +1,6 @@
 ﻿interface Answer {
     Id: number;
-    QuestinoId: number;
+    QuestionId: number;
     Text: string;
     Value: number;
 }
