@@ -10,19 +10,11 @@ using TestMakerFreeWebApp.Data.Models;
 
 namespace TestMakerFreeWebApp.Controllers
 {
-    [Route("api/[controller]")]
-    public class QuizController : Controller
+    public class QuizController : BaseApiController
     {
-        #region Private Fields
-        private ApplicationDbContext DbContext;
-        #endregion
-
         #region Constructor
         public QuizController(ApplicationDbContext context)
-        {
-            // Instantiate the ApplicationDbContext through DI
-            DbContext = context;
-        }
+            : base(context) { }
         #endregion
 
         #region RESTful conventions methods
@@ -49,16 +41,13 @@ namespace TestMakerFreeWebApp.Controllers
 
             return new JsonResult(
                 quiz.Adapt<QuizViewModel>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+                JsonSettings);
         }
 
         /// <summary>
         /// Adds a new Quiz to the Database
         /// </summary>
-        /// <param name="model">The QuizViewModel containing the data to insert</param>        
+        /// <param name="model">The QuizViewModel containing the data to insert</param>
         [HttpPost]
         public IActionResult Post([FromBody]QuizViewModel model)
         {
@@ -85,11 +74,8 @@ namespace TestMakerFreeWebApp.Controllers
             DbContext.SaveChanges();
 
             // return the newly-created Quiz to the client.
-            return new JsonResult(quiz.Adapt<QuizViewModel>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+            return new JsonResult(quiz.Adapt<QuizViewModel>()
+                , JsonSettings);
         }
 
         /// <summary>
@@ -131,11 +117,8 @@ namespace TestMakerFreeWebApp.Controllers
             DbContext.SaveChanges();
 
             // return the updated Quiz to the client.
-            return new JsonResult(quiz.Adapt<QuizViewModel>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+            return new JsonResult(quiz.Adapt<QuizViewModel>()
+                , JsonSettings);
         }
 
         /// <summary>
@@ -185,10 +168,7 @@ namespace TestMakerFreeWebApp.Controllers
                 .ToArray();
             return new JsonResult(
                 latest.Adapt<QuizViewModel[]>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+                JsonSettings);
         }
 
         /// <summary>
@@ -206,10 +186,7 @@ namespace TestMakerFreeWebApp.Controllers
                 .ToArray();
             return new JsonResult(
                 byTitle.Adapt<QuizViewModel[]>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+                JsonSettings);
         }
 
         /// <summary>
@@ -227,10 +204,7 @@ namespace TestMakerFreeWebApp.Controllers
                 .ToArray();
             return new JsonResult(
                 random.Adapt<QuizViewModel[]>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+                JsonSettings);
         }
         #endregion
     }
