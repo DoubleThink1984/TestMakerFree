@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
+import { QuizSearchComponent } from './components/quiz/quiz-search.component';
 import { HomeComponent } from './components/home/home.component';
 import { QuizListComponent } from './components/quiz/quiz-list.component';
 import { QuizEditComponent } from './components/quiz/quiz-edit.component';
@@ -25,6 +26,7 @@ import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.co
         AppComponent,
         NavMenuComponent,
         HomeComponent,
+        QuizSearchComponent,
         QuizListComponent,
         QuizComponent,
         QuizEditComponent,
