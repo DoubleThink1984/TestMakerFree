@@ -60,30 +60,30 @@ export class QuestionEditComponent {
             Text: ['', Validators.required]
         });
 
-        this.activityLog = '';
-        this.log("Form has been initialized.");
+        //this.activityLog = '';
+        //this.log("Form has been initialized.");
 
         // react to form changes
-        this.form.valueChanges
-            .subscribe(val => {
-                if (!this.form.dirty) {
-                    this.log("Form Model has been loaded.");
-                }
-                else {
-                    this.log("Form was updated by the user.");
-                }
-            });
+        //this.form.valueChanges
+        //    .subscribe(val => {
+        //        if (!this.form.dirty) {
+        //            this.log("Form Model has been loaded.");
+        //        }
+        //        else {
+        //            this.log("Form was updated by the user.");
+        //        }
+        //    });
 
         // react to changes in the form.Text control
-        this.form.get("Text")!.valueChanges
-            .subscribe(val => {
-                if (!this.form.dirty) {
-                    this.log("Text control has been loaded with initial values.");
-                }
-                else {
-                    this.log("Text control was updated by the user.");
-                }
-            });
+        //this.form.get("Text")!.valueChanges
+        //    .subscribe(val => {
+        //        if (!this.form.dirty) {
+        //            this.log("Text control has been loaded with initial values.");
+        //        }
+        //        else {
+        //            this.log("Text control was updated by the user.");
+        //        }
+        //    });
     }
 
 
@@ -118,7 +118,7 @@ export class QuestionEditComponent {
                 .put<Question>(url, tempQuestion)
                 .subscribe(res => {
                     var v = res;
-                    console.log("Question " + v.Id + " has been updated.");
+                    //console.log("Question " + v.Id + " has been updated.");
                     this.router.navigate(["quiz/edit", v.QuizId]);
                 }, error => console.log(error));
         }
@@ -127,7 +127,7 @@ export class QuestionEditComponent {
                 .post<Question>(url, tempQuestion)
                 .subscribe(res => {
                     var v = res;
-                    console.log("Question " + v.Id + " has been created.");
+                    //console.log("Question " + v.Id + " has been created.");
                     this.router.navigate(["quiz/edit", v.QuizId]);
                 }, error => console.log(error));
         }
