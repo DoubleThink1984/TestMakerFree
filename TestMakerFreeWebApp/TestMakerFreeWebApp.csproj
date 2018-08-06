@@ -42,6 +42,8 @@
     <None Remove="ClientApp\app\interfaces\question.ts" />
     <None Remove="ClientApp\app\interfaces\quiz.ts" />
     <None Remove="ClientApp\app\interfaces\result.ts" />
+    <None Remove="ClientApp\app\services\auth.service.ts" />
+    <None Remove="ClientApp\app\services\token.response.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +66,8 @@
     <TypeScriptCompile Include="ClientApp\app\interfaces\question.ts" />
     <TypeScriptCompile Include="ClientApp\app\interfaces\quiz.ts" />
     <TypeScriptCompile Include="ClientApp\app\interfaces\result.ts" />
+    <TypeScriptCompile Include="ClientApp\app\interfaces\token.response.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\auth.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

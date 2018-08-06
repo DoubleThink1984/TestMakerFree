@@ -7,14 +7,19 @@ using System.Linq;
 using TestMakerFreeWebApp.Data;
 using Mapster;
 using TestMakerFreeWebApp.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace TestMakerFreeWebApp.Controllers
 {
     public class QuizController : BaseApiController
     {
         #region Constructor
-        public QuizController(ApplicationDbContext context)
-            : base(context) { }
+        public QuizController(ApplicationDbContext context,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration)
+            : base(context, roleManager, userManager, configuration) { }
         #endregion
 
         #region RESTful conventions methods

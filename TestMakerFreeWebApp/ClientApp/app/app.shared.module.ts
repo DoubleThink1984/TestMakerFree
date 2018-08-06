@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+import { AuthService } from './services/auth.service'
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { QuizSearchComponent } from './components/quiz/quiz-search.component';
@@ -62,6 +62,9 @@ import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.co
             { path: 'login', component: LoginComponent },
             { path: '**', component: PageNotFoundComponent }
         ])
+    ],
+    providers: [
+        AuthService
     ]
 })
 export class AppModuleShared {

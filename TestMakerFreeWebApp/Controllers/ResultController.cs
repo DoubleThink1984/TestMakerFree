@@ -7,14 +7,19 @@ using System.Linq;
 using TestMakerFreeWebApp.Data;
 using Mapster;
 using TestMakerFreeWebApp.Data.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 
 namespace TestMakerFreeWebApp.Controllers
 {
     public class ResultController : BaseApiController
     {
         #region Constructor
-        public ResultController(ApplicationDbContext context)
-            : base(context) { }
+        public ResultController(ApplicationDbContext context,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration)
+            : base(context, roleManager, userManager, configuration) { }
         #endregion
 
         #region RESTful conventions methods
