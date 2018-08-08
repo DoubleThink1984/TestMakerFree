@@ -9,6 +9,7 @@ using Mapster;
 using TestMakerFreeWebApp.Data.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestMakerFreeWebApp.Controllers
 {
@@ -28,6 +29,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// </summary>
         /// <param name="id">The ID of an existing Result</param>
         /// <returns>the Result with the given {id}</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -49,6 +51,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// Adds a new Result to the Database
         /// </summary>
         /// <param name="model">The ResultViewModel containing the data to insert</param>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody]ResultViewModel model)
         {
@@ -78,6 +81,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// Edit the Result with the given {id}
         /// </summary>
         /// <param name="model">The ResultViewModel containing the data to update</param>
+        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody]ResultViewModel model)
         {

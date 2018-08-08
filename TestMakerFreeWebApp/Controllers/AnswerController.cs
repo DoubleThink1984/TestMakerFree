@@ -9,6 +9,7 @@ using Mapster;
 using TestMakerFreeWebApp.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestMakerFreeWebApp.Controllers
 {
@@ -49,6 +50,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// Adds a new Answer to the Database
         /// </summary>
         /// <param name="model">The AnswerViewModel containing the data to insert</param>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody]AnswerViewModel model)
         {
@@ -78,6 +80,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// Edit the Answer with the given {id}
         /// </summary>
         /// <param name="model">The AnswerViewModel containing the data to update</param>
+        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody]AnswerViewModel model)
         {
@@ -118,6 +121,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// Deletes the Answer with the given {id} from the Database
         /// </summary>
         /// <param name="id">The ID of an existing Answer</param>
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

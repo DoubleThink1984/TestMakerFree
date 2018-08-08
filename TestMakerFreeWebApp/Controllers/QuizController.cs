@@ -9,6 +9,7 @@ using Mapster;
 using TestMakerFreeWebApp.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestMakerFreeWebApp.Controllers
 {
@@ -53,6 +54,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// Adds a new Quiz to the Database
         /// </summary>
         /// <param name="model">The QuizViewModel containing the data to insert</param>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody]QuizViewModel model)
         {
@@ -87,6 +89,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// Edit the Quiz with the given {id}
         /// </summary>
         /// <param name="model">The QuizViewModel containing the data to update</param>
+        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody]QuizViewModel model)
         {
@@ -130,6 +133,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// Deletes the Quiz with the given {id} from the Database
         /// </summary>
         /// <param name="id">The ID of an existing Test</param>
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

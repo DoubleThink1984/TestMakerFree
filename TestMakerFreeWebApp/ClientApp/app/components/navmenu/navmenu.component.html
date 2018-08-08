@@ -22,12 +22,19 @@
                         <span class='glyphicon glyphicon-info-sign'></span> About
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
+                <li *ngIf="!this.auth.isLoggedIn()"
+                    [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/login']">
                         <span class='glyphicon glyphicon-log-in'></span> Login
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
+                <li *ngIf="auth.isLoggedIn()">
+                    <a (click)="logOut()">
+                        <span class='glyphicon glyphicon-log-in'></span> Logout
+                    </a>
+                </li>
+                <li *ngIf="auth.isLoggedIn()"
+                    [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/quiz/create']">
                         <span class='glyphicon glyphicon-plus'></span> Create a Quiz
                     </a>
