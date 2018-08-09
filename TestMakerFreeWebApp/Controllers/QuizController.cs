@@ -10,6 +10,7 @@ using TestMakerFreeWebApp.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace TestMakerFreeWebApp.Controllers
 {
@@ -71,9 +72,7 @@ namespace TestMakerFreeWebApp.Controllers
             quiz.LastModifiedDate = quiz.CreatedDate;
 
             // Set a temporary author using the Admin user's userId
-            // as user login isn't supported yet: we'll change this later on.
-            quiz.UserId = DbContext.Users.Where(u => u.UserName == "Admin")
-                .FirstOrDefault().Id;
+            quiz.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             // add the new quiz
             DbContext.Quizzes.Add(quiz);
