@@ -312,43 +312,15 @@ namespace TestMakerFreeWebApp.Controllers
                     return new UnauthorizedResult();
                 }
 
-                // username & password matches: create and return the Jwt token.
+                // username & password matches: create and return the refresh token
+                var rt = CreateRefreshToken(model.client_id, user.Id);
 
-                DateTime now = DateTime.UtcNow;
+                // add the new refresh token to the DB
+                DbContext.Tokens.Add(rt);
+                DbContext.SaveChanges();
 
-                // add the registered claims for JWT (RFC7519).
-                // For more info, see https://tools.ietf.org/html/rfc7519#section-4.1
-                var claims = new[] {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat,
-                        new DateTimeOffset(now).ToUnixTimeSeconds().ToString())
-                    // TODO: add additional claims here
-                };
-
-                var tokenExpirationMins =
-                    Configuration.GetValue<int>("Auth:Jwt:TokenExpirationInMinutes");
-                var issuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(Configuration["Auth:Jwt:Key"]));
-
-                var token = new JwtSecurityToken(
-                    issuer: Configuration["Auth:Jwt:Issuer"],
-                    audience: Configuration["Auth:Jwt:Audience"],
-                    claims: claims,
-                    notBefore: now,
-                    expires: now.Add(TimeSpan.FromMinutes(tokenExpirationMins)),
-                    signingCredentials: new SigningCredentials(
-                        issuerSigningKey, SecurityAlgorithms.HmacSha256)
-                );
-                var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-                // build & return the response
-                var response = new TokenResponseViewModel()
-                {
-                    token = encodedToken,
-                    expiration = tokenExpirationMins
-                };
-                return Json(response);
+                var token = CreateAccessToken(user.Id, rt.Value);
+                return Json(token);
             }
             catch (Exception ex)
             {
