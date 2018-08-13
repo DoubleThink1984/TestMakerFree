@@ -23,6 +23,7 @@ import { ResultEditComponent } from './components/result/result-edit.component';
 import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.component';
+import { RegisterComponent } from './components/user/register.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.co
         ResultEditComponent,
         AboutComponent,
         LoginComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        RegisterComponent
     ],
     imports: [
         CommonModule,
@@ -62,6 +64,7 @@ import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.co
             { path: 'result/edit/:id', component: ResultEditComponent },
             { path: 'about', component: AboutComponent },
             { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegisterComponent },
             { path: '**', component: PageNotFoundComponent }
         ])
     ],
