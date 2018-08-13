@@ -51,7 +51,7 @@ export class RegisterComponent {
         var url = this.baseUrl + "api/user";
 
         this.http
-            .put<User>(url, tempUser)
+            .post<User>(url, tempUser)
             .subscribe(res => {
                 if (res) {
                     var v = res;
