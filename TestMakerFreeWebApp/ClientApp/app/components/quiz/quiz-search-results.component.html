@@ -8,7 +8,7 @@
             <li class="list-group-item"
                 *ngFor="let quiz of quizzes"
                 [class.selected]="quiz === selectedQuiz"
-                (click)="onSelect(quiz)">
+                (click)="onSelect(quiz.Id)">
                 <img src=""
                      alt="" class="img-circle" />
                 <!--<img src="https://lorempixel.com/50/50/?random={{quiz.Id}}"

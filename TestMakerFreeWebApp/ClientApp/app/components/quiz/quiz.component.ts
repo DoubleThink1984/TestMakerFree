@@ -1,6 +1,7 @@
 ﻿import { Component, Inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { Location } from "@angular/common";
 import { AuthService } from "../../services/auth.service";
 
 @Component({
@@ -13,6 +14,7 @@ export class QuizComponent {
     quiz: Quiz;
 
     constructor(private activatedRoute: ActivatedRoute,
+        private location: Location,
         private router: Router,
         private http: HttpClient,
         public auth: AuthService,
@@ -51,5 +53,9 @@ export class QuizComponent {
                     this.router.navigate(["home"]);
                 }, error => console.log(error));
         }
+    }
+
+    onBack() {
+        this.location.back();
     }
 }

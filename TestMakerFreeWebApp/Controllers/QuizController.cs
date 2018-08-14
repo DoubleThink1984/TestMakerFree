@@ -214,6 +214,26 @@ namespace TestMakerFreeWebApp.Controllers
                 random.Adapt<QuizViewModel[]>(),
                 JsonSettings);
         }
+
+        [HttpGet("Search")]
+        public IActionResult Search(string q)
+        {
+            Quiz[] results;
+            if (string.IsNullOrWhiteSpace(q))
+            {
+                results = DbContext.Quizzes.OrderBy(x => x.Title).ToArray();
+            }
+            else
+            {
+                results = DbContext.Quizzes
+                            .Where(x => x.Title == q || x.Title.StartsWith(q) || x.Title.Contains(q))
+                            .OrderBy(x => x.Title)
+                            .ToArray();
+            }            
+
+            return new JsonResult(results.Adapt<QuizViewModel[]>(),
+                JsonSettings);
+        }
         #endregion
     }
 }

@@ -24,6 +24,7 @@ import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { RegisterComponent } from './components/user/register.component';
+import { QuizSearchResultsComponent } from './components/quiz/quiz-search-results.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { RegisterComponent } from './components/user/register.component';
         HomeComponent,
         QuizSearchComponent,
         QuizListComponent,
+        QuizSearchResultsComponent,
         QuizComponent,
         QuizEditComponent,
         QuestionListComponent,
@@ -53,6 +55,7 @@ import { RegisterComponent } from './components/user/register.component';
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
+            { path: 'search', component: QuizSearchResultsComponent },
             { path: 'quiz/create', component: QuizEditComponent },
             { path: 'quiz/edit/:id', component: QuizEditComponent },
             { path: 'quiz/:id', component: QuizComponent },

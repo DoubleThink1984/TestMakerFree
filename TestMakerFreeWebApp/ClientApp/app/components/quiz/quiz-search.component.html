@@ -1,6 +1,7 @@
-﻿<form class="navbar-form navbar-left {{class}}" role="search">
+﻿<form class="navbar-form navbar-left {{class}}" role="search" (ngSubmit)="search(searchString.value)">
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="{{placeholder}}">
+        <input type="text" #searchString
+               class="form-control" placeholder="{{placeholder}}">
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>

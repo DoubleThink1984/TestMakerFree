@@ -36,6 +36,7 @@
     <None Remove="ClientApp\app\components\question\question-list.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz-edit.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz-list.component.ts" />
+    <None Remove="ClientApp\app\components\quiz\quiz-search-results.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz-search.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz.component.ts" />
     <None Remove="ClientApp\app\components\user\register.component.ts" />
@@ -64,6 +65,7 @@
     <TypeScriptCompile Include="ClientApp\app\components\question\question-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-edit.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-list.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-search-results.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-search.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\user\register.component.ts" />
