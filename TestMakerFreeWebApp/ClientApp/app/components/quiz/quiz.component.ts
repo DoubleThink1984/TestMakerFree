@@ -42,6 +42,10 @@ export class QuizComponent {
         this.router.navigate(["quiz/edit", this.quiz.Id]);
     }
 
+    onFileUpload() {
+        this.router.navigate(["upload/edit", this.quiz.Id]);
+    }
+
 
     onDelete() {
         if (confirm("Do you really want to delete this quiz?")) {

@@ -64,6 +64,12 @@
                            (click)="onDelete()"
                            class="btn btn-sm btn-danger" />
                 </div>
+                <div *ngIf="auth.isLoggedIn()" class="edit">
+                    <input type="button" value="Upload File"
+                           (click)="onFileUpload()"
+                           class="btn btn-sm btn-success" />
+                </div>
+
             </div>
         </div>
     </div>

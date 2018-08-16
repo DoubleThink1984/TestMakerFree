@@ -1,0 +1,11 @@
+.upload-edit {
+  width: 80%;
+}
+@media (max-width: 767px) {
+  .upload-edit {
+    width: 100%;
+  }
+}
+.upload-edit textarea {
+  min-height: 100px;
+}

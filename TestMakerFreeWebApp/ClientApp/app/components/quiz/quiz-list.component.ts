@@ -1,6 +1,7 @@
 ﻿import { Component, Inject, Input, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { QuizListType, QuizService } from "../../services/quiz.service";
 
 @Component({
     selector: "quiz-list",
@@ -18,6 +19,7 @@ export class QuizListComponent implements OnInit {
 
     constructor(http: HttpClient,
         @Inject('BASE_URL') baseUrl: string,
+        private quizService: QuizService,
         private router: Router) {
         this.http = http;
         this.baseUrl = baseUrl;
@@ -29,26 +31,21 @@ export class QuizListComponent implements OnInit {
             + this.class);
 
         var url = this.baseUrl + "api/quiz/";
-
+        var quizListType: QuizListType;
         switch (this.class) {
             case "latest":
             default:
-                this.title = "Latest Quizzes";
-                url += "Latest/";
+                quizListType = QuizListType.Latest;
                 break;
             case "byTitle":
-                this.title = "Quizzes by Title";
-                url += "ByTitle/";
+                quizListType = QuizListType.ByTitle;
                 break;
             case "random":
-                this.title = "Random Quizzes";
-                url += "Random/";
+                quizListType = QuizListType.Random;
                 break;
         }
 
-        this.http.get<Quiz[]>(url).subscribe(result => {
-            this.quizzes = result;
-        }, error => console.error(error));
+        //this.getQuizes(quizListType);
     }
 
     onSelect(quiz: Quiz) {
@@ -58,4 +55,13 @@ export class QuizListComponent implements OnInit {
             + " has been selected.");
         this.router.navigate(["quiz", this.selectedQuiz.Id]);
     }
+
+    //getQuizes(listType: QuizListType) {
+    //    this.quizService.getQuizList(listType)
+    //        .subscribe(result => {
+    //            this.quizzes = result;
+    //        },
+    //            error => console.log(error)
+    //    );
+    //}
 }

@@ -39,15 +39,18 @@
     <None Remove="ClientApp\app\components\quiz\quiz-search-results.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz-search.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz.component.ts" />
+    <None Remove="ClientApp\app\components\upload\upload.component.ts" />
     <None Remove="ClientApp\app\components\user\register.component.ts" />
     <None Remove="ClientApp\app\interfaces\answer.ts" />
     <None Remove="ClientApp\app\interfaces\question.ts" />
     <None Remove="ClientApp\app\interfaces\quiz.ts" />
     <None Remove="ClientApp\app\interfaces\result.ts" />
+    <None Remove="ClientApp\app\interfaces\uploadQueue.ts" />
     <None Remove="ClientApp\app\interfaces\User.ts" />
     <None Remove="ClientApp\app\services\auth.interceptor.ts" />
     <None Remove="ClientApp\app\services\auth.response.interceptor.ts" />
     <None Remove="ClientApp\app\services\auth.service.ts" />
+    <None Remove="ClientApp\app\services\quiz.service.ts" />
     <None Remove="ClientApp\app\services\token.response.ts" />
   </ItemGroup>
 
@@ -68,6 +71,7 @@
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-search-results.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-search.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\upload\upload.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\user\register.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\interfaces\answer.ts" />
     <TypeScriptCompile Include="ClientApp\app\interfaces\question.ts" />
@@ -78,6 +82,7 @@
     <TypeScriptCompile Include="ClientApp\app\services\auth.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\auth.response.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\quiz.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

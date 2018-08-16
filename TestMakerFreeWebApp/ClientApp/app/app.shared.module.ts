@@ -20,11 +20,13 @@ import { AnswerListComponent } from './components/answer/answer-list.component';
 import { AnswerEditComponent } from './components/answer/answer-edit.component';
 import { ResultListComponent } from './components/result/result-list.component';
 import { ResultEditComponent } from './components/result/result-edit.component';
+import { UploadEditComponent } from './components/upload/upload.component';
 import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { RegisterComponent } from './components/user/register.component';
 import { QuizSearchResultsComponent } from './components/quiz/quiz-search-results.component';
+import { QuizService } from './services/quiz.service';
 
 @NgModule({
     declarations: [
@@ -42,6 +44,7 @@ import { QuizSearchResultsComponent } from './components/quiz/quiz-search-result
         AnswerEditComponent,
         ResultListComponent,
         ResultEditComponent,
+        UploadEditComponent,
         AboutComponent,
         LoginComponent,
         PageNotFoundComponent,
@@ -59,6 +62,7 @@ import { QuizSearchResultsComponent } from './components/quiz/quiz-search-result
             { path: 'quiz/create', component: QuizEditComponent },
             { path: 'quiz/edit/:id', component: QuizEditComponent },
             { path: 'quiz/:id', component: QuizComponent },
+            { path: 'upload/edit/:id', component: UploadEditComponent },
             { path: 'question/create/:id', component: QuestionEditComponent },
             { path: 'question/edit/:id', component: QuestionEditComponent },
             { path: 'answer/create/:id', component: AnswerEditComponent },
@@ -72,6 +76,7 @@ import { QuizSearchResultsComponent } from './components/quiz/quiz-search-result
         ])
     ],
     providers: [
+        QuizService,
         AuthService,
         {
             provide: HTTP_INTERCEPTORS,

@@ -43,6 +43,11 @@ namespace TestMakerFreeWebApp.Data.Models
 
         [Required]
         public DateTime LastModifiedDate { get; set; }
+
+        private void getSomething()
+        {
+            IEnumerable<Quiz> asdf = new List<Quiz>();
+        }
         #endregion
 
         #region Lazy-Load Properties
@@ -50,6 +55,9 @@ namespace TestMakerFreeWebApp.Data.Models
         /// A list of all the quiz created by this users.
         /// </summary>
         public virtual List<Quiz> Quizzes { get; set; }
+
+        public virtual List<Upload> Uploads { get; set; }
+
         public virtual List<Token> Tokens { get; set; }
         #endregion
     }
