@@ -47,16 +47,16 @@ export class UploadEditComponent {
             reportProgress: true,
         });
 
-        this.http.post(this.baseUrl + "api/upload", uploadReq, {reportProgress: true}).subscribe(event => {
-            this.router.navigate(["home"]);
-            //let e = event;
-            //if (event !== null) {
-            //    if (event.type === HttpEventType.UploadProgress)
-            //        this.uploadProgress = Math.round(100 * event.loaded / event.total);
-            //    else if (event instanceof HttpResponse)
-            //        this.message = event.body.toString();
-            //}            
-        });
+        //this.http.post(this.baseUrl + "api/upload", uploadReq, {reportProgress: true}).subscribe(event => {
+        //    this.router.navigate(["home"]);
+        //    //let e = event;
+        //    //if (event !== null) {
+        //    //    if (event.type === HttpEventType.UploadProgress)
+        //    //        this.uploadProgress = Math.round(100 * event.loaded / event.total);
+        //    //    else if (event instanceof HttpResponse)
+        //    //        this.message = event.body.toString();
+        //    //}            
+        //});
     }  
 
     onBack() {

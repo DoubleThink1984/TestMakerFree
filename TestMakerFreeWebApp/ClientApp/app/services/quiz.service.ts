@@ -12,21 +12,22 @@ export class QuizService {
     }
 
     getQuizList(type: QuizListType): Observable<Quiz[]> {
-        var url = this.baseUrl + type.toString();
+        var url = this.baseUrl + "api/quiz/" + type;
         var quizzes: Quiz[];
 
         return this.http.get<Quiz[]>(url)
-            .map((res) => {
-                quizzes = res;
-                return res;
-            }).catch(error => {
-                return new Observable<any>(error);
-            });
+        .map((res) => {
+            return res;
+        })
+        .catch(error => {
+            return new Observable<any>(error);
+        });
+        //return this.http.get<Quiz[]>(url)
     }
 }
 
 export enum QuizListType {
-    ByTitle,
-    Latest,
-    Random
+    ByTitle = "ByTitle",
+    Latest = "Latest",
+    Random = "Random"
 }

@@ -45,7 +45,7 @@ export class QuizListComponent implements OnInit {
                 break;
         }
 
-        //this.getQuizes(quizListType);
+        this.getQuizes(quizListType);
     }
 
     onSelect(quiz: Quiz) {
@@ -56,12 +56,12 @@ export class QuizListComponent implements OnInit {
         this.router.navigate(["quiz", this.selectedQuiz.Id]);
     }
 
-    //getQuizes(listType: QuizListType) {
-    //    this.quizService.getQuizList(listType)
-    //        .subscribe(result => {
-    //            this.quizzes = result;
-    //        },
-    //            error => console.log(error)
-    //    );
-    //}
+    getQuizes(listType: QuizListType) {
+        this.quizService.getQuizList(listType)
+            .subscribe(result => {
+                this.quizzes = result;
+            },
+                error => console.log(error)
+        );
+    }
 }
