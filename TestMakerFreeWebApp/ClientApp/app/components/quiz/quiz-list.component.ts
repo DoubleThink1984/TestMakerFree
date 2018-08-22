@@ -1,6 +1,7 @@
 ﻿import { Component, Inject, Input, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { QuizListType, QuizService } from "../../services/quiz.service";
 
 @Component({
     selector: "quiz-list",
@@ -18,6 +19,7 @@ export class QuizListComponent implements OnInit {
 
     constructor(http: HttpClient,
         @Inject('BASE_URL') baseUrl: string,
+        private quizService: QuizService,
         private router: Router) {
         this.http = http;
         this.baseUrl = baseUrl;
@@ -28,27 +30,26 @@ export class QuizListComponent implements OnInit {
             " instantiated with the following class: "
             + this.class);
 
-        var url = this.baseUrl + "api/quiz/";
+        var listType: QuizListType;
 
         switch (this.class) {
             case "latest":
+                listType = QuizListType.Latest;
             default:
-                this.title = "Latest Quizzes";
-                url += "Latest/";
+                listType = QuizListType.Latest;
                 break;
             case "byTitle":
-                this.title = "Quizzes by Title";
-                url += "ByTitle/";
+                listType = QuizListType.ByTitle;
                 break;
             case "random":
-                this.title = "Random Quizzes";
-                url += "Random/";
+                listType = QuizListType.Random;
                 break;
         }
 
-        this.http.get<Quiz[]>(url).subscribe(result => {
-            this.quizzes = result;
-        }, error => console.error(error));
+        this.quizService.getQuizList(listType).subscribe(res => {
+            this.quizzes = res;
+        },
+            error => { console.log(error) });
     }
 
     onSelect(quiz: Quiz) {

@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { QuizService } from './services/quiz.service';
 import { AuthService } from './services/auth.service';
 import { AuthResponseInterceptor } from './services/auth.response.interceptor';
 import { AuthInterceptor } from './services/auth.interceptor';
@@ -72,6 +73,7 @@ import { QuizSearchResultsComponent } from './components/quiz/quiz-search-result
         ])
     ],
     providers: [
+        QuizService,
         AuthService,
         {
             provide: HTTP_INTERCEPTORS,
