@@ -32,13 +32,13 @@ namespace TestMakerFreeWebApp.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var answer = DbContext.Answers.Where(i => i.Id == id)
-                .FirstOrDefault();
+            var answer = DbContext.Answers
+                .FirstOrDefault(i => i.Id == id);
 
             // handle requests asking for non-existing quizzes
             if (answer == null) return NotFound(new
             {
-                Error = String.Format("Answer ID {0} has not been found", id)
+                Error = string.Format("Answer ID {0} has not been found", id)
             });
 
             return new JsonResult(
@@ -89,13 +89,13 @@ namespace TestMakerFreeWebApp.Controllers
             if (model == null) return new StatusCodeResult(500);
 
             // retrieve the answer to edit
-            var answer = DbContext.Answers.Where(q => q.Id ==
-                        model.Id).FirstOrDefault();
+            var answer = DbContext.Answers.FirstOrDefault(q => q.Id ==
+                                                               model.Id);
 
             // handle requests asking for non-existing quizzes
             if (answer == null) return NotFound(new
             {
-                Error = String.Format("Answer ID {0} has not been found", model.Id)
+                Error = string.Format("Answer ID {0} has not been found", model.Id)
             });
 
             // handle the update (without object-mapping)
@@ -126,13 +126,13 @@ namespace TestMakerFreeWebApp.Controllers
         public IActionResult Delete(int id)
         {
             // retrieve the answer from the Database
-            var answer = DbContext.Answers.Where(i => i.Id == id)
-                .FirstOrDefault();
+            var answer = DbContext.Answers
+                .FirstOrDefault(i => i.Id == id);
 
             // handle requests asking for non-existing answers
             if (answer == null) return NotFound(new
             {
-                Error = String.Format("Answer ID {0} has not been found", id)
+                Error = string.Format("Answer ID {0} has not been found", id)
             });
 
             // remove the quiz from the DbContext.

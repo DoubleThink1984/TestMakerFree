@@ -34,15 +34,15 @@ namespace TestMakerFreeWebApp.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var quiz = DbContext.Quizzes.Where(i => i.Id == id)
-                .FirstOrDefault();
+            var quiz = DbContext.Quizzes
+                .FirstOrDefault(i => i.Id == id);
 
             // handle requests asking for non-existing quizzes
             if (quiz == null)
             {
                 return NotFound(new
                 {
-                    Error = String.Format("Quiz ID {0} has not been found", id)
+                    Error = string.Format("Quiz ID {0} has not been found", id)
                 });
             }
 
@@ -97,15 +97,15 @@ namespace TestMakerFreeWebApp.Controllers
             if (model == null) return new StatusCodeResult(500);
 
             // retrieve the quiz to edit
-            var quiz = DbContext.Quizzes.Where(q => q.Id ==
-                        model.Id).FirstOrDefault();
+            var quiz = DbContext.Quizzes.FirstOrDefault(q => q.Id ==
+                                                             model.Id);
 
             // handle requests asking for non-existing quizzes
             if (quiz == null)
             {
                 return NotFound(new
                 {
-                    Error = String.Format("Quiz ID {0} has not been found", model.Id)
+                    Error = string.Format("Quiz ID {0} has not been found", model.Id)
                 });
             }
 
@@ -137,15 +137,15 @@ namespace TestMakerFreeWebApp.Controllers
         public IActionResult Delete(int id)
         {
             // retrieve the quiz from the Database
-            var quiz = DbContext.Quizzes.Where(i => i.Id == id)
-                .FirstOrDefault();
+            var quiz = DbContext.Quizzes
+                .FirstOrDefault(i => i.Id == id);
 
             // handle requests asking for non-existing quizzes
             if (quiz == null)
             {
                 return NotFound(new
                 {
-                    Error = String.Format("Quiz ID {0} has not been found", id)
+                    Error = string.Format("Quiz ID {0} has not been found", id)
                 });
             }
 
