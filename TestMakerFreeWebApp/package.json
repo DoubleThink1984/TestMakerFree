@@ -58,5 +58,9 @@
     "webpack-hot-middleware": "2.20.0",
     "webpack-merge": "4.1.1",
     "zone.js": "0.8.12"
+  },
+  "dependencies": {
+    "@angular/cdk": "^5.2.5",
+    "@angular/material": "^5.2.5"
   }
 }
