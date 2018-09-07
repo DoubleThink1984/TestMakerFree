@@ -28,6 +28,7 @@ import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.co
 import { RegisterComponent } from './components/user/register.component';
 import { QuizSearchResultsComponent } from './components/quiz/quiz-search-results.component';
 import { ModalTestComponent } from './components/modal/modal-test.component';
+import { UploadEditComponent } from './components/upload/upload-edit.component';
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -84,6 +85,7 @@ import {
         AboutComponent,
         LoginComponent,
         ModalTestComponent,
+        UploadEditComponent,
         PageNotFoundComponent,
         RegisterComponent
     ],
@@ -141,7 +143,8 @@ import {
             { path: 'about', component: AboutComponent },
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
-            { path: '**', component: PageNotFoundComponent }
+            { path: 'upload/create', component: UploadEditComponent },
+            { path: '**', component: PageNotFoundComponent },
         ])
     ],
     providers: [

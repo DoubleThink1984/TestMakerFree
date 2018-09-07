@@ -51,6 +51,7 @@ namespace TestMakerFreeWebApp.Data.Models
         /// </summary>
         public virtual List<Quiz> Quizzes { get; set; }
         public virtual List<Token> Tokens { get; set; }
+        public virtual List<Upload> Uploads { get; set; }
         #endregion
     }
 }
