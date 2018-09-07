@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -26,6 +27,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { RegisterComponent } from './components/user/register.component';
 import { QuizSearchResultsComponent } from './components/quiz/quiz-search-results.component';
+import { ModalTestComponent } from './components/modal/modal-test.component';
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -61,6 +63,8 @@ import {
     MatTooltipModule,
 } from '@angular/material';
 
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -79,6 +83,7 @@ import {
         ResultEditComponent,
         AboutComponent,
         LoginComponent,
+        ModalTestComponent,
         PageNotFoundComponent,
         RegisterComponent
     ],
@@ -87,6 +92,7 @@ import {
         HttpClientModule,
         FormsModule,
         MatAutocompleteModule,
+        //BrowserAnimationsModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatCardModule,
