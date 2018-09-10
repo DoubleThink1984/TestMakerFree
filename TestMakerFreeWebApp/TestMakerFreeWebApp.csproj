@@ -46,6 +46,7 @@
     <None Remove="ClientApp\app\interfaces\question.ts" />
     <None Remove="ClientApp\app\interfaces\quiz.ts" />
     <None Remove="ClientApp\app\interfaces\result.ts" />
+    <None Remove="ClientApp\app\interfaces\upload.ts" />
     <None Remove="ClientApp\app\interfaces\User.ts" />
     <None Remove="ClientApp\app\services\auth.interceptor.ts" />
     <None Remove="ClientApp\app\services\auth.response.interceptor.ts" />
@@ -79,6 +80,7 @@
     <TypeScriptCompile Include="ClientApp\app\interfaces\quiz.ts" />
     <TypeScriptCompile Include="ClientApp\app\interfaces\result.ts" />
     <TypeScriptCompile Include="ClientApp\app\interfaces\token.response.ts" />
+    <TypeScriptCompile Include="ClientApp\app\interfaces\upload.ts" />
     <TypeScriptCompile Include="ClientApp\app\interfaces\user.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\auth.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\auth.response.interceptor.ts" />

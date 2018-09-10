@@ -15,10 +15,51 @@
 <button (click)="addFile()">Add</button>-->
 
 <div class="example-container">
-    <mat-form-field>
-        <input matInput #fileInput type="file" />
-    </mat-form-field>
-    <mat-form-field>
-        <button mat-raised-button [color]="primary" (click)="addFile()">Add</button>
-    </mat-form-field>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group" [ngClass]="{ 'has-error has-feedback' : hasError(FileName) }">
+            <label for="FileName">File Name</label><br />
+
+            <mat-form-field>
+                <input type="text" matInput formControlName="FileName" required placeholder="file name..."/>
+            </mat-form-field>
+            <span *ngIf="hasError('FileName')" 
+                  class="glyphicon glyphicon-remove form-control-feedback"
+                  aria-hidden="true"></span>
+            <div *ngIf="hasError('FileName')"
+                 class="help-block">
+                File name is required
+            </div>
+        </div>
+        
+        <div class="form-group" [ngClass]="{ 'has-error has-feedback' : hasError(Description) }">
+            <label for="Description">Description</label><br />
+            <mat-form-field>
+                <input type="text" matInput formControlName="Description" />
+            </mat-form-field>
+            <span *ngIf="hasError('Description')"
+                  class="glyphicon glyphicon-remove form-control-feedback"
+                  aria-hidden="true"></span>
+            <div *ngIf="hasError('Description')"
+                 class="help-block">
+                Description name is required
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="File">File: </label>
+            <mat-form-field>
+                <input class="form-control" #fileInput type="file" formControlName="File" (change)="previewImage($event)" />
+            </mat-form-field>
+        </div>
+        <br />
+        <mat-form-field>
+            <button mat-raised-button [color]="secondary" type="submit" [disabled]="form.invalid">Add</button>
+        </mat-form-field><br />
+        <div class="row" *ngIf="localImgUrl">
+            <div class="col-md-4" >
+                <img [src]="localImgUrl" class="img img-thumbnail" />
+            </div>
+        </div>
+        
+    </form>    
 </div>

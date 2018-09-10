@@ -4,12 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using TestMakerFreeWebApp.Data;
 using TestMakerFreeWebApp.Data.Models;
+using TestMakerFreeWebApp.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,22 +41,24 @@ namespace TestMakerFreeWebApp.Controllers
         }
 
         // POST api/<controller>
+        // UploadViewModel has IFormFile property
+        // Submitted as form data from client
         [HttpPost]
-        public IActionResult Post(IFormFile file)
+        public IActionResult Post([FromForm]UploadViewModel uploadViewModel)
         {
-            if(file == null) throw new Exception("File is null");
-            if (file.Length == 0) throw new Exception("File is empty");
+            var file = uploadViewModel.File;
+            if(file == null || file.Length == 0) return BadRequest();
 
             using (Stream stream = file.OpenReadStream())
             {
                 using (var binaryReader = new BinaryReader(stream))
                 {
                     var fileContent = binaryReader.ReadBytes((int)file.Length);
-                    //await _uploadService.AddFile(fileContent, file.FileName, file.ContentType);
+
                     var upload = new Upload
                     {
                         CreatedDate = DateTime.Now,
-                        Description = "Some Description",
+                        Description = uploadViewModel.Description,
                         Extension = Path.GetExtension(file.FileName),
                         File = fileContent,
                         FileName = Path.GetFileNameWithoutExtension(file.FileName),
@@ -67,9 +71,11 @@ namespace TestMakerFreeWebApp.Controllers
                     DbContext.Uploads.Add(upload);
                     // persist the changes into the Database.
                     DbContext.SaveChanges();
+                    upload.File = null;
+                                       
+                    return CreatedAtAction(nameof(Get), new { id = upload.Id }, upload.Adapt<UploadViewModel>());
                 }
             }
-            return new NoContentResult();
         }
 
         // PUT api/<controller>/5
