@@ -40,6 +40,7 @@
     <None Remove="ClientApp\app\components\quiz\quiz-search-results.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz-search.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz.component.ts" />
+    <None Remove="ClientApp\app\components\upload\upload-detail.component.ts" />
     <None Remove="ClientApp\app\components\upload\upload-edit.component.ts" />
     <None Remove="ClientApp\app\components\user\register.component.ts" />
     <None Remove="ClientApp\app\interfaces\answer.ts" />
@@ -73,6 +74,7 @@
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-search-results.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-search.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\upload\upload-detail.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\upload\upload-edit.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\user\register.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\interfaces\answer.ts" />

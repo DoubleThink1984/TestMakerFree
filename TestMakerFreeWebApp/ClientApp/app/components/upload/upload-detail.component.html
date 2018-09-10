@@ -1,0 +1,6 @@
+﻿<div class="row" *ngIf="imageToShow">
+    <div class="col-md-8 col-md-offset-2" >
+        <img [src]="imageToShow" class="img img-responsive"/>
+    </div>
+</div>
+<a *ngIf="imageHref" (click)="getFile()" class="btn btn-default">Download Image</a> 

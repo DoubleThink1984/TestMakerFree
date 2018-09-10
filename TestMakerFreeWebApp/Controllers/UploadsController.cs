@@ -35,9 +35,28 @@ namespace TestMakerFreeWebApp.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var upload = DbContext.Uploads.Find(id);
+            if (upload != null)
+            {
+                Stream stream = new MemoryStream(upload.File);
+                //this.Response.ContentLength = upload.File.Length;
+                return File(stream, upload.MimeType);
+            }
+            return NotFound();
+        }
+
+        [HttpGet("GetFile/{num:int?}")]
+        public IActionResult GetFile(int id)
+        {
+            var upload = DbContext.Uploads.Find(id);
+            if (upload != null)
+            {
+                Stream stream = new MemoryStream(upload.File);
+                return File(stream, upload.MimeType, upload.FileName);
+            }
+            return NotFound();
         }
 
         // POST api/<controller>
