@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TestMakerFreeWebApp.Data.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace TestMakerFree
 {
@@ -29,6 +30,8 @@ namespace TestMakerFree
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
             services.AddMvc();
 
             // Add EntityFramework support for SqlServer.
@@ -36,7 +39,7 @@ namespace TestMakerFree
 
             // Add ApplicationDbContext.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped
                 );
 
             // Add ASP.NET Identity support
@@ -94,7 +97,15 @@ namespace TestMakerFree
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpected fault  happened. Try again later.");
+                    });
+                });
             }
 
             app.UseStaticFiles(new StaticFileOptions()

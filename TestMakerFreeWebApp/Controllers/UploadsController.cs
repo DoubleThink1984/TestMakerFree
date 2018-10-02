@@ -5,9 +5,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Mapster;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using TestMakerFreeWebApp.Data;
 using TestMakerFreeWebApp.Data.Models;
@@ -42,6 +44,7 @@ namespace TestMakerFreeWebApp.Controllers
             {
                 Stream stream = new MemoryStream(upload.File);
                 //this.Response.ContentLength = upload.File.Length;
+                Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalData.json");
                 return File(stream, upload.MimeType);
             }
             return NotFound();
@@ -54,6 +57,7 @@ namespace TestMakerFreeWebApp.Controllers
             if (upload != null)
             {
                 Stream stream = new MemoryStream(upload.File);
+                Response.Headers.Add($"Content-Disposition", $"attachment; filename={upload.FileName}");
                 return File(stream, upload.MimeType, upload.FileName);
             }
             return NotFound();
@@ -63,6 +67,7 @@ namespace TestMakerFreeWebApp.Controllers
         // UploadViewModel has IFormFile property
         // Submitted as form data from client
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public IActionResult Post([FromForm]UploadViewModel uploadViewModel)
         {
             var file = uploadViewModel.File;
@@ -90,9 +95,8 @@ namespace TestMakerFreeWebApp.Controllers
                     DbContext.Uploads.Add(upload);
                     // persist the changes into the Database.
                     DbContext.SaveChanges();
-                    upload.File = null;
-                                       
-                    return CreatedAtAction(nameof(Get), new { id = upload.Id }, upload.Adapt<UploadViewModel>());
+                    var uploadDto = upload.Adapt<UploadViewModel>();
+                    return CreatedAtAction(nameof(Get), new { id = upload.Id }, uploadDto);
                 }
             }
         }
@@ -108,5 +112,21 @@ namespace TestMakerFreeWebApp.Controllers
         public void Delete(int id)
         {
         }
+
+        //public class GenerateAntiforgeryTokenCookieForAjaxAttribute : ActionFilterAttribute
+        //{
+        //    public override void OnActionExecuted(ActionExecutedContext context)
+        //    {
+        //        var antiforgery = context.HttpContext.RequestServices.GetService<IAntiforgery>();
+
+        //        // We can send the request token as a JavaScript-readable cookie, 
+        //        // and Angular will use it by default.
+        //        var tokens = antiforgery.GetAndStoreTokens(context.HttpContext);
+        //        context.HttpContext.Response.Cookies.Append(
+        //            "XSRF-TOKEN",
+        //            tokens.RequestToken,
+        //            new CookieOptions() { HttpOnly = false });
+        //    }
+        //}
     }
 }
