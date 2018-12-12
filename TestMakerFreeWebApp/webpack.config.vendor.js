@@ -14,6 +14,7 @@ const treeShakableModules = [
     '@angular/platform-browser-dynamic',
     '@angular/router',
     'zone.js',
+    '@aspnet/signalr'
 ];
 const nonTreeShakableModules = [
     '@angular/material/prebuilt-themes/deeppurple-amber.css',

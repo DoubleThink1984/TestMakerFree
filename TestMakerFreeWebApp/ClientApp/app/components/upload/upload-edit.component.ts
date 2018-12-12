@@ -37,7 +37,7 @@ export class UploadEditComponent {
         var tmpUpload = <Upload>{};
         tmpUpload.Description = this.form.value.Description;
         tmpUpload.FileName = this.form.value.FileName;
-        tmpUpload.Id = this.upload.Id;
+        tmpUpload.Id = this.upload.Id != null ? this.upload.Id :  0;
 
         let fi = this.fileInput.nativeElement;
         //let fi = this.form.value.File;
@@ -47,7 +47,7 @@ export class UploadEditComponent {
             input.append("File", tmpUpload.File);
             input.append("Description", tmpUpload.Description);
             input.append("FileName", tmpUpload.FileName);
-            input.append("Id", '');
+            input.append("Id", tmpUpload.Id.toString());
 
             let url = this.baseUrl + "api/uploads";
             this.http.post<Upload>(url, input).subscribe(res => {

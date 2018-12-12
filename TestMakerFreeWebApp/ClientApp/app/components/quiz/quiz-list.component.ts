@@ -14,16 +14,10 @@ export class QuizListComponent implements OnInit {
     title: string;
     selectedQuiz: Quiz;
     quizzes: Quiz[];
-    http: HttpClient;
-    baseUrl: string;
 
-    constructor(http: HttpClient,
-        @Inject('BASE_URL') baseUrl: string,
+    constructor(
         private quizService: QuizService,
-        private router: Router) {
-        this.http = http;
-        this.baseUrl = baseUrl;
-    }
+        private router: Router) {}
 
     ngOnInit() {
         console.log("QuizListComponent" + 
@@ -46,8 +40,11 @@ export class QuizListComponent implements OnInit {
                 break;
         }
 
-        this.quizService.getQuizList(listType).subscribe(res => {
-            this.quizzes = res;
+        this.quizService.getQuizList(listType).subscribe(response => {
+            const keys = response.headers.keys();
+            var headers = keys.map(key =>
+                `${key} :  ${response.headers.get(key)}`);
+            this.quizzes = response.body as Quiz[];
         },
             error => { console.log(error) });
     }

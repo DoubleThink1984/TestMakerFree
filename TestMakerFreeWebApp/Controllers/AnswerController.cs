@@ -30,6 +30,8 @@ namespace TestMakerFreeWebApp.Controllers
         /// <param name="id">The ID of an existing Answer</param>
         /// <returns>the Answer with the given {id}</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public IActionResult Get(int id)
         {
             var answer = DbContext.Answers
@@ -41,9 +43,11 @@ namespace TestMakerFreeWebApp.Controllers
                 Error = string.Format("Answer ID {0} has not been found", id)
             });
 
-            return new JsonResult(
-                answer.Adapt<AnswerViewModel>(),
-                JsonSettings);
+            return Ok(answer.Adapt<AnswerViewModel>());
+
+            //return new JsonResult(
+            //    answer.Adapt<AnswerViewModel>(),
+            //    JsonSettings);
         }
 
         /// <summary>
@@ -71,9 +75,13 @@ namespace TestMakerFreeWebApp.Controllers
             // persist the changes into the Database.
             DbContext.SaveChanges();
 
+            var answerDto = answer.Adapt<AnswerViewModel>();
+
             // return the newly-created Answer to the client.
-            return new JsonResult(answer.Adapt<AnswerViewModel>()
-                , JsonSettings);
+            return CreatedAtAction(nameof(Get), new { id = answer.Id}, answerDto);
+
+            //return new JsonResult(answer.Adapt<AnswerViewModel>()
+            //    , JsonSettings);
         }
 
         /// <summary>
@@ -148,6 +156,7 @@ namespace TestMakerFreeWebApp.Controllers
 
         // GET api/answer/all
         [HttpGet("All/{questionId}")]
+        //[HttpGet("Quiz/{id}/Questions/{questionId}/Answers")]
         public IActionResult All(int questionId)
         {
             var answers = DbContext.Answers

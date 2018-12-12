@@ -1,0 +1,30 @@
+﻿<ul class="nav nav-tabs">
+    <li *ngFor="let tab of tabs" [ngClass]="{'active': currentRoom==tab.heading}" (click)="OnRoomChange(tab.heading)"><a data-toggle="tab" href="#home">{{tab.heading}}</a></li>
+</ul>
+
+<div class="tab-content">
+    <div *ngFor="let tab of tabs" id="home" class="tab-pane fade in" [ngClass]="{'active': currentRoom==tab.heading}">
+        <h3>{{tab.title}}</h3>
+        <input type="hidden" name="room" [(ngModel)]="chatMessage.room" value="{{tab.heading}}" />
+        <p *ngFor="let msg of tab.messageHistory">{{msg.message}}</p>
+    </div>
+</div>
+
+<form class="form-inline" (ngSubmit)="sendMessage()">
+    <footer class="footer" style="width:70%;background:#fdd679; bottom:0%;position:fixed">
+        <div class="container">
+            <div class="row" style="background:#fdd679;">
+                <div class="col-sm-9">
+
+                    <div style="width:100%;  padding-top: 10px;" class="clearfix">
+
+                        <input type="text" id="message" [(ngModel)]="chatMessage.message" name="message" class="form-control pull-left shadow" input-focus="content" />
+
+                        <input id="sendmessage" class="btn btn-default pull-right shadow" type="submit" value="Send" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</form> 

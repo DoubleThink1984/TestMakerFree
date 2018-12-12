@@ -7,6 +7,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { QuizService } from './services/quiz.service';
 import { AuthService } from './services/auth.service';
+import { ClockComponent } from './components/sandbox/clock/clock.component';
+import { SignalRService } from './services/signalR.service';
 import { AuthResponseInterceptor } from './services/auth.response.interceptor';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { AppComponent } from './components/app/app.component';
@@ -30,6 +32,8 @@ import { QuizSearchResultsComponent } from './components/quiz/quiz-search-result
 import { ModalTestComponent } from './components/modal/modal-test.component';
 import { UploadEditComponent } from './components/upload/upload-edit.component';
 import { UploadDetailComponent } from './components/upload/upload-detail.component';
+import { SignalRChatComponent } from './components/SignalRChat/SignalR-chat.component';
+
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -70,6 +74,7 @@ import {
 @NgModule({
     declarations: [
         AppComponent,
+        ClockComponent,
         NavMenuComponent,
         HomeComponent,
         QuizSearchComponent,
@@ -89,7 +94,8 @@ import {
         UploadEditComponent,
         UploadDetailComponent,
         PageNotFoundComponent,
-        RegisterComponent
+        RegisterComponent,
+        SignalRChatComponent
     ],
     imports: [
         CommonModule,
@@ -138,6 +144,7 @@ import {
             { path: 'quiz/:id', component: QuizComponent },
             { path: 'question/create/:id', component: QuestionEditComponent },
             { path: 'question/edit/:id', component: QuestionEditComponent },
+            { path: 'clock', component: ClockComponent },
             { path: 'answer/create/:id', component: AnswerEditComponent },
             { path: 'answer/edit/:id', component: AnswerEditComponent },
             { path: 'result/create/:id', component: ResultEditComponent },
@@ -147,11 +154,13 @@ import {
             { path: 'register', component: RegisterComponent },
             { path: 'upload/details/:id', component: UploadDetailComponent },
             { path: 'upload/create', component: UploadEditComponent },
+            { path: 'signalR/chat', component: SignalRChatComponent },
             { path: '**', component: PageNotFoundComponent },
         ])
     ],
     providers: [
         QuizService,
+        SignalRService,
         AuthService,
         {
             provide: HTTP_INTERCEPTORS,

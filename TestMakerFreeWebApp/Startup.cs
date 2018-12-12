@@ -15,6 +15,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TestMakerFreeWebApp.Data.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
+using AspNetCoreRateLimit;
+using ScottBrady91.AspNetCore.Identity;
+//using Microsoft.AspNetCore.ResponseCaching;
 
 namespace TestMakerFree
 {
@@ -31,8 +38,43 @@ namespace TestMakerFree
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddScoped<IUrlHelper>(x => {
+                var actionContext = x.GetRequiredService<IActionContextAccessor>().ActionContext;
+                var factory = x.GetRequiredService<IUrlHelperFactory>();
+                return factory.GetUrlHelper(actionContext);
+            });
 
-            services.AddMvc();
+            services.AddMvc(setupAction =>
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+                
+                var xmlDataContractSerializerInputFormatter = new XmlDataContractSerializerInputFormatter();
+                xmlDataContractSerializerInputFormatter.SupportedMediaTypes.Add("application/my.custom.type+xml");
+                
+                var xmlDataContractSerializerOutputFormatter = new XmlDataContractSerializerOutputFormatter();
+                xmlDataContractSerializerOutputFormatter.SupportedMediaTypes.Add("application/my.custon.type+xml");
+
+
+                setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+                setupAction.InputFormatters.Add(new XmlDataContractSerializerInputFormatter());
+
+                var jsonInputFormatter = setupAction.InputFormatters.OfType<JsonInputFormatter>().FirstOrDefault();
+
+                if (jsonInputFormatter != null)
+                {
+                    jsonInputFormatter.SupportedMediaTypes.Add("application/my.custom.type+json");
+                }
+
+                var jsonOutputFormatter = setupAction.OutputFormatters.OfType<JsonOutputFormatter>().FirstOrDefault();
+
+                if (jsonOutputFormatter != null)
+                {
+                    jsonOutputFormatter.SupportedMediaTypes.Add("application/my.custom.type+json");
+                }
+            });
+
+            services.AddSignalR();
 
             // Add EntityFramework support for SqlServer.
             services.AddEntityFrameworkSqlServer();
@@ -43,6 +85,9 @@ namespace TestMakerFree
                 );
 
             // Add ASP.NET Identity support
+
+            //services.AddIdentityCore<ApplicationUser>(OptionsConfigurationServiceCollectionExtensions => { });
+
             services.AddIdentity<ApplicationUser, IdentityRole>(
                 opts =>
                 {
@@ -54,6 +99,20 @@ namespace TestMakerFree
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+            //services.ConfigureApplicationCookie(options => 
+            //{
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+            //    options.LoginPath = "/Identity/Account/Login";
+            //    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            //    options.SlidingExpiration = true;
+            //});
+
+            //services.Configure<PasswordHasherOptions>(options => {
+            //    options.IterationCount = 100000;
+            //    options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2;
+            //});
             //Add Authentication with JWT Tokens
             services.AddAuthentication(opts =>
             {
@@ -82,6 +141,33 @@ namespace TestMakerFree
                 };
                 cfg.IncludeErrorDetails = true;
             });
+
+            //services.AddMemoryCache();
+
+            //services.Configure<IpRateLimitOptions>((options) =>
+            //    {
+            //        options.GeneralRules = new List<RateLimitRule>()
+            //        {
+            //            new RateLimitRule()
+            //            {
+            //                Endpoint = "*",
+            //                Limit = 10,
+            //                Period = "5m"
+            //            },
+            //            new RateLimitRule()
+            //            {
+            //                Endpoint = "*",
+            //                Limit = 2,
+            //                Period = "10s"
+            //            }
+            //        };
+            //    }
+            //);
+
+            //services.AddScoped<IPasswordHasher<ApplicationUser>, BCryptPasswordHasher<ApplicationUser>>();
+
+            //services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            //services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,6 +211,9 @@ namespace TestMakerFree
             // Add the AuthenticationMiddleware to the pipeline
             app.UseAuthentication();
 
+            //app.UseIpRateLimiting();
+
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -135,6 +224,11 @@ namespace TestMakerFree
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            //app.UseSignalR(route => 
+            //{
+            //    route.MapHub<ChatHub>("/chathub");
+            //});
 
             // Create a service scope to get an ApplicationDbContext instance using DI
             using (var serviceScope =
@@ -147,7 +241,7 @@ namespace TestMakerFree
                 dbContext.Database.Migrate();
 
                 DbSeeder.Seed(dbContext, roleManager, userManager);
-            }
+            }           
         }
     }
 }

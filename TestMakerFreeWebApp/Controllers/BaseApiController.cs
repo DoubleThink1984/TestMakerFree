@@ -8,10 +8,11 @@ using Mapster;
 using Microsoft.AspNetCore.Identity;
 using TestMakerFreeWebApp.Data.Models;
 using Microsoft.Extensions.Configuration;
+using TestMakerFreeWebApp.Controllers.Infrastructure.RoutingExtensions;
 
 namespace TestMakerFreeWebApp.Controllers
 {
-    [Route("api/[controller]")]
+    [BaseRouteTemplate]
     public class BaseApiController : Controller
     {
         #region Constructor

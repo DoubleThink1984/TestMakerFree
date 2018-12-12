@@ -3,11 +3,12 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using TestMakerFreeWebApp.Data.Models;
 
 namespace TestMakerFreeWebApp.ViewModels
 {
     [JsonObject(MemberSerialization.OptOut)]
-    public class UploadViewModel
+    public class UploadViewModel : LinkedResourceBaseDto
     {
         public int Id { get; set; }
 
@@ -15,6 +16,7 @@ namespace TestMakerFreeWebApp.ViewModels
 
         public string FileName { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
         //public int Type { get; set; }

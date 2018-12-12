@@ -28,8 +28,11 @@ export class QuizComponent {
         if (id) {
             var url = this.baseUrl + "api/quiz/" + id;
 
-            this.http.get<Quiz>(url).subscribe(result => {
-                this.quiz = result;
+            this.http.get<Quiz>(url, { observe: 'response' }).subscribe(result => {
+                var keys = result.headers.keys();
+                var headers = keys.map(key =>
+                    `${key}: ${result.headers.get(key)}`);
+                this.quiz = result.body as Quiz;
             }, error => console.error(error));
         }
         else {

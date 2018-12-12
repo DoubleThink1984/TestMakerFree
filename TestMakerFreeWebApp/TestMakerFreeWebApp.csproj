@@ -8,14 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCoreRateLimit" Version="2.1.0" />
     <PackageReference Include="Mapster" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="ScottBrady91.AspNetCore.Identity.BCryptPasswordHasher" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +43,8 @@
     <None Remove="ClientApp\app\components\quiz\quiz-search-results.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz-search.component.ts" />
     <None Remove="ClientApp\app\components\quiz\quiz.component.ts" />
+    <None Remove="ClientApp\app\components\sandbox\clock\clock.component.ts" />
+    <None Remove="ClientApp\app\components\SignalRChat\SignalR-chat.component.ts" />
     <None Remove="ClientApp\app\components\upload\upload-detail.component.ts" />
     <None Remove="ClientApp\app\components\upload\upload-edit.component.ts" />
     <None Remove="ClientApp\app\components\user\register.component.ts" />
@@ -53,14 +58,8 @@
     <None Remove="ClientApp\app\services\auth.response.interceptor.ts" />
     <None Remove="ClientApp\app\services\auth.service.ts" />
     <None Remove="ClientApp\app\services\quiz.service.ts" />
+    <None Remove="ClientApp\app\services\signalR.service.ts" />
     <None Remove="ClientApp\app\services\token.response.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\dist\89889688147bd7575d6327160d64e760.svg" />
-    <None Include="wwwroot\dist\main-client.js" />
-    <None Include="wwwroot\dist\main-client.js.map" />
-    <None Include="wwwroot\dist\vendor.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,6 +73,8 @@
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-search-results.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz-search.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\quiz\quiz.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\sandbox\clock\clock.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\SignalRChat\SignalR-chat.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\upload\upload-detail.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\upload\upload-edit.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\user\register.component.ts" />
@@ -88,6 +89,7 @@
     <TypeScriptCompile Include="ClientApp\app\services\auth.response.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\auth.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\quiz.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\signalR.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

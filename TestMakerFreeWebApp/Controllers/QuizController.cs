@@ -11,20 +11,36 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.Extensions.Primitives;
+using TestMakerFreeWebApp.Controllers.Infrastructure.RoutingExtensions;
 
 namespace TestMakerFreeWebApp.Controllers
 {
     public class QuizController : BaseApiController
     {
+        private IUrlHelper _urlHelper;
         #region Constructor
         public QuizController(ApplicationDbContext context,
             RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
-            IConfiguration configuration)
-            : base(context, roleManager, userManager, configuration) { }
+            IConfiguration configuration,
+            IUrlHelper urlHelper)
+            : base(context, roleManager, userManager, configuration)
+        {
+            this._urlHelper = urlHelper;
+        }
         #endregion
 
         #region RESTful conventions methods
+        
+        [HttpOptions]
+        public IActionResult GetQuizOptions()
+        {
+            Response.Headers.Add("Allow", "GET,OPTIONS,POST,DELETE");
+
+            return Ok();
+        }
+        
         /// <summary>
         /// GET: api/quiz/{id}
         /// Retrieves the Quiz with the given {id}
@@ -32,8 +48,11 @@ namespace TestMakerFreeWebApp.Controllers
         /// <param name="id">The ID of an existing Quiz</param>
         /// <returns>the Quiz with the given {id}</returns>
         [HttpGet("{id}")]
+        [HttpHead]
         public IActionResult Get(int id)
         {
+            var url = _urlHelper.Action(nameof(Put));
+
             var quiz = DbContext.Quizzes
                 .FirstOrDefault(i => i.Id == id);
 
@@ -57,6 +76,7 @@ namespace TestMakerFreeWebApp.Controllers
         /// <param name="model">The QuizViewModel containing the data to insert</param>
         [Authorize]
         [HttpPost]
+        //[ResponseCache]
         public IActionResult Post([FromBody]QuizViewModel model)
         {
             // return a generic HTTP Status 500 (Server Error)
@@ -168,8 +188,23 @@ namespace TestMakerFreeWebApp.Controllers
         /// <param name="num">the number of quizzes to retrieve</param>
         /// <returns>the {num} latest Quizzes</returns>
         [HttpGet("Latest/{num:int?}")]
-        public IActionResult Latest(int num = 10)
+        [RequestHeaderMatchesMediaType("Accept", new[] { "application/json" })]
+        public IActionResult Latest([FromHeader(Name = "Accept")] string mediaType, int num = 10)
         {
+            var byTitle = DbContext.Quizzes
+                .OrderBy(q => q.Title)
+                .Take(num)
+                .ToArray();
+            var requestHeaders = HttpContext.Request.Headers.TryGetValue("Accept", out StringValues values);
+            if (requestHeaders)
+            {
+                foreach (var item in values)
+                {
+                    var asdf = item;
+                    var asdfasdf = string.Empty;
+                }
+            }
+
             var latest = DbContext.Quizzes
                 .OrderByDescending(q => q.CreatedDate)
                 .Take(num)
@@ -186,12 +221,23 @@ namespace TestMakerFreeWebApp.Controllers
         /// <param name="num">the number of quizzes to retrieve</param>
         /// <returns>{num} Quizzes sorted by Title</returns>
         [HttpGet("ByTitle/{num:int?}")]
-        public IActionResult ByTitle(int num = 10)
+        public IActionResult ByTitle([FromHeader(Name = "Accept")] string mediaType, int num = 10)
         {
             var byTitle = DbContext.Quizzes
                 .OrderBy(q => q.Title)
                 .Take(num)
                 .ToArray();
+            var requestHeaders = HttpContext.Request.Headers.TryGetValue("Accept", out StringValues values);
+            if (requestHeaders)
+            {
+                foreach (var item in values)
+                {
+                    var asdf = item;
+                    var asdfasdf = string.Empty;
+                }
+            }
+            Request.HttpContext.Response.Headers.Add("X-Quiz-List-Length", byTitle.Length.ToString());
+
             return new JsonResult(
                 byTitle.Adapt<QuizViewModel[]>(),
                 JsonSettings);
@@ -204,8 +250,22 @@ namespace TestMakerFreeWebApp.Controllers
         /// <param name="num">the number of quizzes to retrieve</param>
         /// <returns>{num} random Quizzes</returns>
         [HttpGet("Random/{num:int?}")]
-        public IActionResult Random(int num = 10)
+        public IActionResult Random([FromHeader(Name = "Accept")] string mediaType, int num = 10)
         {
+            var byTitle = DbContext.Quizzes
+                .OrderBy(q => q.Title)
+                .Take(num)
+                .ToArray();
+            var requestHeaders = HttpContext.Request.Headers.TryGetValue("Accept", out StringValues values);
+            if (requestHeaders)
+            {
+                foreach (var item in values)
+                {
+                    var asdf = item;
+                    var asdfasdf = string.Empty;
+                }
+            }
+
             var random = DbContext.Quizzes
                 .OrderBy(q => Guid.NewGuid())
                 .Take(num)
