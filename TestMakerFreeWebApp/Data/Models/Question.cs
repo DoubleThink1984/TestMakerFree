@@ -22,6 +22,7 @@ namespace TestMakerFreeWebApp.Data.Models
             public int Id { get; set; }
 
             [Required]
+            [ForeignKey("Quiz")]
             public int QuizId { get; set; }
 
             [Required]
@@ -46,7 +47,7 @@ namespace TestMakerFreeWebApp.Data.Models
             /// <summary>
             /// The parent quiz.
             /// </summary>
-            [ForeignKey("QuizId")]
+            //[ForeignKey("QuizId")]
             public virtual Quiz Quiz { get; set; }
 
             /// <summary>
